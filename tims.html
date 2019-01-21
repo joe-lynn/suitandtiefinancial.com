@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #list{
+            background-color: blue;
+            height: 400px;
+            width: 400px;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .list-item{
+            list-style: none;
+            background-color: red;
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -25px;
+            margin-top: -25px;
+        }
+    </style>
+</head>
+<body>
+<ul id="list"></ul>
+<button id="add-item">Add item</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<p>
+    gotem
+</p>
+</body>
+<script>
+    let list = $("#list");
+    let zero_start = 270; // if you want to start from a different position, should be positive
+
+    let updateLayout = function(listItems){
+        let offsetAngle = (360 / (listItems.length-1));
+        for(let i = 0; i < listItems.length; i ++){
+            let rotateAngle = zero_start + (offsetAngle * i || 0);
+
+            $(listItems[i]).css("transform", "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)")
+        }
+    };
+
+    $(document).on("click", "#add-item", function(){
+        let listItem = $("<img class='list-item' src='img/iii.svg'/>");
+        list.append(listItem);
+        let listItems = $(".list-item");
+        console.log(list);
+        updateLayout(listItems);
+
+    });
+
+    $(document).on("click", ".remove-item", function(){
+        $(this).parent().remove();
+        let listItems = $(".list-item");
+        updateLayout(listItems);
+    });
+</script>
+</html>
